@@ -16,8 +16,8 @@ jobs:
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ftp.hosting.atw.hu
+          server: ftps.hosting.atw.hu
           username: pchotlinekft
-          password: Huroc2019
+          password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./teszt/
           server-dir: ./www/party.security/
