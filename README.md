@@ -1,4 +1,4 @@
-# huroc-party-backend-server
+# huroc-party-security-client
 
 This project is the open-source repo of the official Huroc Partys Security client.
 
