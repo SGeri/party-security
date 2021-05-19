@@ -13,12 +13,11 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v2.3.2
 
-      - name: teszt
-        run: echo 'kód ${{ secrets.FTP_PASSWORD }}'
-
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ftps.hosting.atw.hu
+          server: ftp.hosting.atw.hu
           username: pchotlinekft
           password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./teszt/
+          server-dir: ./www/party.security/
