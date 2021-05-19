@@ -1,0 +1,21 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  ftp-deploy:
+    name: Deploy to FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2.3.2
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftps.hosting.atw.hu
+          username: pchotlinekft
+          password: ${{ secrets.FTP_PASSWORD }}
