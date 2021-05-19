@@ -18,6 +18,6 @@ jobs:
         with:
           server: ftp.hosting.atw.hu
           username: pchotlinekft
-          password: ${{ secrets.FTP_PASSWORD }}
+          password: Huroc2019
           local-dir: ./teszt/
           server-dir: ./www/party.security/
