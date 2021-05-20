@@ -6,7 +6,7 @@ import Authentication from "./classes/Authentication";
 class App extends React.Component {
   state = {
     isAuthenticated: false,
-  }; //asd
+  };
 
   componentDidMount() {
     if (localStorage.getItem("auth")) {

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Grid, Header, Form, Label, Segment, Button } from "semantic-ui-react";
 
-export class Authentication extends React.Component {
+class Authentication extends React.Component {
   state = {
     key: "",
     error: "",
@@ -73,3 +73,5 @@ export class Authentication extends React.Component {
     );
   }
 }
+
+export default Authentication;

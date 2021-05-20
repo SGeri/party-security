@@ -1,7 +1,8 @@
+import React from "react";
 import QrReader from "react-qr-scanner";
 import { Label, Button } from "semantic-ui-react";
 
-export class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   state = {
     scan: "",
     scanReady: true,
@@ -71,3 +72,5 @@ export class Dashboard extends React.Component {
     );
   }
 }
+
+export default Dashboard;
