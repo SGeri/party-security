@@ -3,6 +3,15 @@ import axios from "axios";
 import QrReader from "react-qr-scanner";
 import { Label, Button } from "semantic-ui-react";
 
+const styles = {
+  successText: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "transform: translate(-50%, -50%)",
+  },
+};
+
 class Dashboard extends React.Component {
   state = {
     scan: "",
@@ -19,18 +28,16 @@ class Dashboard extends React.Component {
   handleScan = async (data) => {
     if (!data || !this.state.scanReady) return;
 
-    this.setState({ loading: true });
+    console.log(data);
+
+    this.setState({ scanReady: false });
     await axios
-      .post("http://localhost:4200/keycheck", { key: data })
+      .post("http://localhost:4200/keycheck", { key: data.text })
       .then((res) => {
         if (res.data.valid === true) {
           this.setState({ success: true });
         } else {
-          this.setState({
-            success: false,
-            error: "Helytelen kulcs",
-            loading: false,
-          });
+          this.setState({ success: false });
         }
       })
       .catch(() => {
@@ -46,28 +53,32 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { success, error } = this.state;
+    const { success, scanReady } = this.state;
 
     return (
       <div>
         <h1>Dashboard</h1>
-        <QrReader
-          delay={1000}
-          style={{ width: "100%" }}
-          onError={this.handleError}
-          onScan={this.handleScan}
-        />
-        {error && (
-          <Label basic color="red">
-            {error}
-          </Label>
-        )}
 
-        {success && (
-          <Label basic color="green">
-            Sikeres olvasás
-          </Label>
-        )}
+        <div>
+          <QrReader
+            delay={1000}
+            style={{ width: "100%" }}
+            onError={this.handleError}
+            onScan={this.handleScan}
+          />
+
+          {!scanReady && success && (
+            <Label style={styles.successText} color="green" size="huge">
+              Helyes kód!
+            </Label>
+          )}
+
+          {!scanReady && !success && (
+            <Label style={styles.successText} color="red" size="huge">
+              Helytelen kód!
+            </Label>
+          )}
+        </div>
         <Button onClick={this.onLogout}>Kijelentkezés</Button>
       </div>
     );
