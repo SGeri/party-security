@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import QrReader from "react-qr-scanner";
 import { Label, Button } from "semantic-ui-react";
 
