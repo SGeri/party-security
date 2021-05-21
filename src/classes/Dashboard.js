@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import QrReader from "react-qr-scanner";
-import { Label, Button } from "semantic-ui-react";
+import { Label, Button, Segment, Loader } from "semantic-ui-react";
 
 const styles = {
   successText: {
@@ -15,12 +15,11 @@ const styles = {
 
 class Dashboard extends React.Component {
   state = {
-    scan: "",
-    scanReady: true,
-    success: false,
-    loading: false,
-    error: "",
     ticketType: "",
+    scanReady: true,
+    loading: false,
+    success: false,
+    requestError: false,
   };
 
   onLogout = () => {
@@ -30,9 +29,7 @@ class Dashboard extends React.Component {
   handleScan = async (data) => {
     if (!data || !this.state.scanReady) return;
 
-    console.log(data);
-
-    this.setState({ scanReady: false });
+    this.setState({ scanReady: false, loading: true });
     await axios
       .post("http://localhost:4200/keycheck", { key: data.text })
       .then((res) => {
@@ -43,25 +40,36 @@ class Dashboard extends React.Component {
         }
       })
       .catch(() => {
-        this.setState({ success: false });
+        this.setState({ requestError: true });
       });
+    this.setState({ loading: false });
     setTimeout(() => {
-      this.setState({ scanReady: true, ticketType: "" });
+      this.setState({ scanReady: true, ticketType: "", requestError: false });
     }, 5000);
   };
 
-  handleError = (err) => {
-    this.setState({ error: err });
+  handleError = () => {
+    this.setState({ requestError: true });
+    setTimeout(() => {
+      this.setState({ requestError: false });
+    }, 5000);
   };
 
   render() {
-    const { success, scanReady, ticketType } = this.state;
+    const {
+      ticketType,
+      scanReady,
+      loading,
+      success,
+      requestError,
+    } = this.state;
 
     return (
       <div>
         <h1>Dashboard</h1>
 
-        <div>
+        <Segment>
+          <Loader active={loading} />
           <QrReader
             delay={1000}
             style={{ width: "100%" }}
@@ -82,7 +90,16 @@ class Dashboard extends React.Component {
               Helytelen kód!
             </Label>
           )}
-        </div>
+
+          {requestError && (
+            <Label style={styles.successText} color="red" size="huge">
+              Hiba a lekérdezéskor
+              <br />
+              Keress meg egy fejlesztőt!
+            </Label>
+          )}
+        </Segment>
+
         <Button onClick={this.onLogout}>Kijelentkezés</Button>
       </div>
     );
