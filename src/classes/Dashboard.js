@@ -9,6 +9,7 @@ const styles = {
     top: "50%",
     left: "50%",
     transform: "transform: translate(-50%, -50%)",
+    textAlign: "center",
   },
 };
 
@@ -19,6 +20,7 @@ class Dashboard extends React.Component {
     success: false,
     loading: false,
     error: "",
+    ticketType: "",
   };
 
   onLogout = () => {
@@ -35,7 +37,7 @@ class Dashboard extends React.Component {
       .post("http://localhost:4200/keycheck", { key: data.text })
       .then((res) => {
         if (res.data.valid === true) {
-          this.setState({ success: true });
+          this.setState({ success: true, ticketType: res.data.ticketType });
         } else {
           this.setState({ success: false });
         }
@@ -44,7 +46,7 @@ class Dashboard extends React.Component {
         this.setState({ success: false });
       });
     setTimeout(() => {
-      this.setState({ scanReady: true });
+      this.setState({ scanReady: true, ticketType: "" });
     }, 5000);
   };
 
@@ -53,7 +55,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    const { success, scanReady } = this.state;
+    const { success, scanReady, ticketType } = this.state;
 
     return (
       <div>
@@ -70,6 +72,8 @@ class Dashboard extends React.Component {
           {!scanReady && success && (
             <Label style={styles.successText} color="green" size="huge">
               Helyes kód!
+              <br />
+              {ticketType}
             </Label>
           )}
 
