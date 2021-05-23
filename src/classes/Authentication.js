@@ -19,7 +19,7 @@ class Authentication extends React.Component {
     } else {
       this.setState({ loading: true });
       await axios
-        .post("http://localhost:4200/login", { key: this.state.key })
+        .post("http://api.party.huroc.com:4200/login", { key: this.state.key })
         .then((res) => {
           if (res.data.success === true) {
             this.props.onAuthenticate(res.data.token);
