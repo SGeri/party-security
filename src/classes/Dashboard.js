@@ -31,9 +31,11 @@ class Dashboard extends React.Component {
 
     this.setState({ scanReady: false, loading: true });
     await axios
-      .post("https://api.party.huroc.com/keycheck", { key: data.text })
+      .post("https://api.party.huroc.com/keycheck", {
+        token: await localStorage.getItem("auth"),
+        key: data.text,
+      })
       .then((res) => {
-        console.log(res.data);
         if (res.data.valid === true) {
           this.setState({ success: true, ticketType: res.data.ticketType });
         } else {
