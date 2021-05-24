@@ -19,8 +19,9 @@ class Authentication extends React.Component {
     } else {
       this.setState({ loading: true });
       await axios
-        .post("http://88.151.99.76:4200/login", { key: this.state.key })
+        .post("https://api.party.huroc.com/login", { key: this.state.key })
         .then((res) => {
+          console.log(res.data);
           if (res.data.success === true) {
             this.props.onAuthenticate(res.data.token);
           } else {
