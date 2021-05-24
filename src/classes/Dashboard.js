@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
     loading: false,
     success: false,
     requestError: false,
+    facingMode: "user",
   };
 
   onLogout = () => {
@@ -65,6 +66,7 @@ class Dashboard extends React.Component {
       loading,
       success,
       requestError,
+      facingMode,
     } = this.state;
 
     return (
@@ -73,12 +75,20 @@ class Dashboard extends React.Component {
 
         <Segment>
           <Loader active={loading} />
+
+          <select
+            onChange={(e) => this.setState({ facingMode: e.target.value })}
+          >
+            <option value="user">User</option>
+            <option value="environment">Environment</option>
+          </select>
+
           <QrReader
             delay={1000}
             style={{ width: "100%" }}
             onError={this.handleError}
             onScan={this.handleScan}
-            facingMode="environment"
+            facingMode={facingMode}
           />
 
           {!scanReady && success && (
