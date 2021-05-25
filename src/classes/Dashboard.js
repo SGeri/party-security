@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
       requestError,
     } = this.state;
 
-    let facingMode = "user";
+    this.setState({ facingMode: "user" });
 
     return (
       <div>
@@ -80,12 +80,12 @@ class Dashboard extends React.Component {
             style={{ width: "100%" }}
             onError={this.handleError}
             onScan={this.handleScan}
-            facingMode={facingMode}
+            facingMode={this.state.facingMode}
           />
 
           <button
             onClick={() => {
-              facingMode = "user";
+              this.setState({ facingMode: "user" });
             }}
           >
             user
@@ -93,7 +93,7 @@ class Dashboard extends React.Component {
 
           <button
             onClick={() => {
-              facingMode = "environment";
+              this.setState({ facingMode: "environment" });
             }}
           >
             environment
@@ -101,7 +101,7 @@ class Dashboard extends React.Component {
 
           <button
             onClick={() => {
-              facingMode = { exact: "user" };
+              this.setState({ facingMode: { exact: "user" } });
             }}
           >
             user2
@@ -109,7 +109,7 @@ class Dashboard extends React.Component {
 
           <button
             onClick={() => {
-              facingMode = { exact: "environment" };
+              this.setState({ facingMode: { exact: "environment" } });
             }}
           >
             environment2
