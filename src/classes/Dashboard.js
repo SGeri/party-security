@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import QrReader from "react-qr-reader";
 import { Label, Button, Segment, Loader } from "semantic-ui-react";
+import { isMobile } from "react-device-detect";
 
 const styles = {
   successText: {
@@ -10,6 +11,12 @@ const styles = {
     left: "25%",
     transform: "transform: translate(-50%, -50%)",
     TextAlign: "center",
+  },
+  readerPhone: {
+    width: "100%",
+  },
+  readerDesktop: {
+    width: "50%",
   },
 };
 
@@ -77,7 +84,7 @@ class Dashboard extends React.Component {
 
           <QrReader
             delay={1000}
-            style={{ width: "100%" }}
+            style={isMobile ? styles.readerPhone : styles.readerDesktop}
             onError={this.handleError}
             onScan={this.handleScan}
             facingMode={this.state.facingMode}
@@ -113,28 +120,35 @@ class Dashboard extends React.Component {
             )}
           </div>
 
-          <div style={{ paddingTop: "10px" }}>
-            <Button
-              onClick={() => {
-                this.setState({ facingMode: "user" });
-              }}
-            >
-              Előlapi kamera
-            </Button>
+          {isMobile && (
+            <div style={{ paddingTop: "10px" }}>
+              <div style={{ margin: "5px" }}>
+                <Button
+                  style={{ marginLeft: "5px", marginBottom: "5px" }}
+                  onClick={() => {
+                    this.setState({ facingMode: "user" });
+                  }}
+                >
+                  Előlapi kamera
+                </Button>
 
-            <Button
-              onClick={() => {
-                this.setState({ facingMode: "environment" });
-              }}
-            >
-              Hátlapi kamera
-            </Button>
+                <Button
+                  style={{ marginLeft: "5px" }}
+                  onClick={() => {
+                    this.setState({ facingMode: "environment" });
+                  }}
+                >
+                  Hátlapi kamera
+                </Button>
+              </div>
 
-            <h4>
-              Jelenleg:{" "}
-              {this.state.facingMode === "user" ? "Előlapi" : "Hátlapi"} kamera
-            </h4>
-          </div>
+              <h4>
+                Jelenleg:
+                {this.state.facingMode === "user" ? " Előlapi " : " Hátlapi "}
+                kamera
+              </h4>
+            </div>
+          )}
         </Segment>
 
         <Button style={{ marginLeft: "5px" }} onClick={this.onLogout}>
