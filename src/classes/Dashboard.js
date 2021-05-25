@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
     loading: false,
     success: false,
     requestError: false,
+    facingMode: "user",
   };
 
   onLogout = () => {
@@ -66,8 +67,6 @@ class Dashboard extends React.Component {
       success,
       requestError,
     } = this.state;
-
-    this.setState({ facingMode: "user" });
 
     return (
       <div>
