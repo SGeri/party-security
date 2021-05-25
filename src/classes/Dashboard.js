@@ -80,7 +80,7 @@ class Dashboard extends React.Component {
             style={{ width: "100%" }}
             onError={this.handleError}
             onScan={this.handleScan}
-            facingMode={exact:{"environment"}}
+            facingMode={{exact:{"environment"}}}
           />
 
           {!scanReady && success && (
