@@ -42,12 +42,12 @@ class Authentication extends React.Component {
     return (
       <Grid
         textAlign="center"
-        style={{ height: "100vh" }}
+        style={{ height: "100vh", margin: "5px" }}
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="black" textAlign="center">
-            Huroc Security
+            Party - Bejelentkezés
           </Header>
           <Form size="large" loading={loading}>
             <Segment stacked>

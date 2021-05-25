@@ -4,13 +4,13 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64 32x32 24x24 16x16 256x256",
       "type": "image/x-icon"
     },
     {
       "src": "huroc_logo.png",
       "type": "image/png",
-      "sizes": "4134x4134"
+      "sizes": "100x100"
     }
   ],
   "start_url": ".",

@@ -6,10 +6,10 @@ import { Label, Button, Segment, Loader } from "semantic-ui-react";
 const styles = {
   successText: {
     position: "absolute",
-    top: "50%",
-    left: "50%",
+    top: "45%",
+    left: "25%",
     transform: "transform: translate(-50%, -50%)",
-    textAlign: "center",
+    TextAlign: "center",
   },
 };
 
@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
     scanReady: true,
     loading: false,
     success: false,
-    requestError: false,
+    requestError: "",
     facingMode: "user",
   };
 
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
         }
       })
       .catch(() => {
-        this.setState({ requestError: true });
+        this.setState({ requestError: "ERR::REQ" });
       });
     this.setState({ loading: false });
     setTimeout(() => {
@@ -53,9 +53,9 @@ class Dashboard extends React.Component {
   };
 
   handleError = () => {
-    this.setState({ requestError: true });
+    this.setState({ requestError: "ERR::PERMISSION" });
     setTimeout(() => {
-      this.setState({ requestError: false });
+      this.setState({ requestError: "" });
     }, 5000);
   };
 
@@ -70,10 +70,11 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <h1>Dashboard</h1>
+        <h1 style={{ margin: "5px" }}>Biztonsági kliens</h1>
 
-        <Segment>
+        <Segment style={{ margin: "5px" }}>
           <Loader active={loading} />
+
           <QrReader
             delay={1000}
             style={{ width: "100%" }}
@@ -82,46 +83,63 @@ class Dashboard extends React.Component {
             facingMode={this.state.facingMode}
           />
 
-          <button
-            onClick={() => {
-              this.setState({ facingMode: "user" });
-            }}
-          >
-            user
-          </button>
+          <div>
+            {!scanReady && success && (
+              <Label style={styles.successText} color="blue" size="huge">
+                Érvényes kód
+                <br />
+                {ticketType}
+              </Label>
+            )}
 
-          <button
-            onClick={() => {
-              this.setState({ facingMode: "environment" });
-            }}
-          >
-            environment
-          </button>
+            {!scanReady && !success && (
+              <Label style={styles.successText} color="red" size="huge">
+                Érvénytelen kód
+              </Label>
+            )}
 
-          <p>{this.state.facingMode}</p>
+            {requestError && (
+              <Label style={styles.successText} color="red" size="huge">
+                {requestError === "ERR::REQ" ? (
+                  <div>
+                    Hiba a szerver kapcsolatban
+                    <br />
+                    Keress meg egy fejlesztőt!
+                  </div>
+                ) : (
+                  <div>Engedélyezd a kamerát</div>
+                )}
+              </Label>
+            )}
+          </div>
 
-          {!scanReady && success && (
-            <Label style={styles.successText} color="green" size="huge">
-              Helyes kód!
-              <br />
-              {ticketType}
-            </Label>
-          )}
-          {!scanReady && !success && (
-            <Label style={styles.successText} color="red" size="huge">
-              Helytelen kód!
-            </Label>
-          )}
-          {requestError && (
-            <Label style={styles.successText} color="red" size="huge">
-              Hiba a lekérdezéskor
-              <br />
-              Keress meg egy fejlesztőt!
-            </Label>
-          )}
+          <div style={{ paddingTop: "10px" }}>
+            <Button
+              onClick={() => {
+                this.setState({ facingMode: "user" });
+              }}
+            >
+              Előlapi kamera
+            </Button>
+
+            <Button
+              onClick={() => {
+                this.setState({ facingMode: "environment" });
+              }}
+            >
+              Hátlapi kamera
+            </Button>
+
+            <h4>
+              Jelenleg:{" "}
+              {this.state.facingMode === "user" ? "Előlapi" : "Hátlapi"} kamera
+            </h4>
+          </div>
         </Segment>
 
-        <Button onClick={this.onLogout}>Kijelentkezés</Button>
+        <Button style={{ marginLeft: "5px" }} onClick={this.onLogout}>
+          Kijelentkezés
+        </Button>
       </div>
     );
   }
