@@ -65,8 +65,9 @@ class Dashboard extends React.Component {
       loading,
       success,
       requestError,
-      facingMode,
     } = this.state;
+
+    let facingMode = "user";
 
     return (
       <div>
@@ -74,14 +75,47 @@ class Dashboard extends React.Component {
 
         <Segment>
           <Loader active={loading} />
-
           <QrReader
             delay={1000}
             style={{ width: "100%" }}
             onError={this.handleError}
             onScan={this.handleScan}
-            facingMode={"rear"}
+            facingMode={facingMode}
           />
+
+          <button
+            onClick={() => {
+              facingMode = "user";
+            }}
+          >
+            user
+          </button>
+
+          <button
+            onClick={() => {
+              facingMode = "environment";
+            }}
+          >
+            environment
+          </button>
+
+          <button
+            onClick={() => {
+              facingMode = { exact: "user" };
+            }}
+          >
+            user2
+          </button>
+
+          <button
+            onClick={() => {
+              facingMode = { exact: "environment" };
+            }}
+          >
+            environment2
+          </button>
+
+          {facingMode}
 
           {!scanReady && success && (
             <Label style={styles.successText} color="green" size="huge">
@@ -90,13 +124,11 @@ class Dashboard extends React.Component {
               {ticketType}
             </Label>
           )}
-
           {!scanReady && !success && (
             <Label style={styles.successText} color="red" size="huge">
               Helytelen kód!
             </Label>
           )}
-
           {requestError && (
             <Label style={styles.successText} color="red" size="huge">
               Hiba a lekérdezéskor

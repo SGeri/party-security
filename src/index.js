@@ -8,7 +8,7 @@ import "semantic-ui-css/semantic.min.css";
 
 ReactDOM.render(
   <HttpsRedirect>
-    <App />
+    <App />,
   </HttpsRedirect>,
   document.getElementById("root")
 );
