@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
             environment2
           </button>
 
-          {facingMode}
+          {this.state.facingMode}
 
           {!scanReady && success && (
             <Label style={styles.successText} color="green" size="huge">
