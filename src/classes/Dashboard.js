@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import QrReader from "react-qr-scanner";
+import QrReader from "react-qr-reader";
 import { Label, Button, Segment, Loader } from "semantic-ui-react";
 
 const styles = {
@@ -96,22 +96,6 @@ class Dashboard extends React.Component {
             }}
           >
             environment
-          </button>
-
-          <button
-            onClick={() => {
-              this.setState({ facingMode: { exact: "user" } });
-            }}
-          >
-            user2
-          </button>
-
-          <button
-            onClick={() => {
-              this.setState({ facingMode: { exact: "environment" } });
-            }}
-          >
-            environment2
           </button>
 
           <p>{this.state.facingMode}</p>
